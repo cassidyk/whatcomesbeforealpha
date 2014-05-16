@@ -19,4 +19,4 @@ Exercises might be included at the bottom of an ICA. Solutions should be automat
 
 ### Exercises ###
 * Create a submission box for scripts
-* Automate building the book on update
+* Automate building the book on update [working]
