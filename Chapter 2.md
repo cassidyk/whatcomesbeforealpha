@@ -68,3 +68,4 @@ done
 * Restore the image file to another partition.
 * Write a script to update your bootloader to the new partition. What did you need to do to confirm the correct partition was booted?
 * Complete the above for Windows 7
+* Create a script that splits/joins adjacent partitions 
