@@ -7,7 +7,7 @@ ICA's will be cumulative in the sense that previous ICA configurations may need 
 Layout of the assignments is still in Beta so feedback is appreciated.
 
 | Shell Variables |
-| -- | -- |
+| -- |
 | Variables are assigned here. Copy and paste into your script |
 
 ```
