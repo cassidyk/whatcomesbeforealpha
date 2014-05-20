@@ -10,7 +10,7 @@
 
 #### The partition table ####
 | Shell Variables |
-| -- | -- |
+| -- |
 | X='a' |
 | source="/dev/sd$X" |
 | destination='/mnt/partition_table.img' |
@@ -29,7 +29,7 @@ pv -tpreb $destination | dd of=$source bs=1 count=$formula
 
 #### Pulling an image ####
 | Shell Variables |
-| -- | -- |
+| -- |
 | X='a' |
 | source="/dev/sd$X" |
 | destination='/mnt/file.img' |
@@ -43,7 +43,7 @@ pv -tpreb $source | dd of=$destination
 #### Pushing an image ####
 
 | Shell Variables |
-| -- | -- |
+| -- |
 | X='a' |
 | source='/mnt/file.img' |
 | destination="/dev/sd$X" |
