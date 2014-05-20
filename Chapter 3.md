@@ -10,7 +10,7 @@
 | BTSync | Installed with yaourt in next section |
 
 | Shell Variables |
-| -- | -- |
+| -- |
 | name='arch' |
 | storage='\/root\/.sync' |
 ```
