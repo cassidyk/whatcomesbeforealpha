@@ -5,7 +5,7 @@
 #### Prep ####
 | To Do | Configuration |
 | -- | -- |
-| Mount | `mount /dev/sdXY /mnt` |
+| Mount | `mount /dev/sd$X$Y /mnt` |
 | List filesystem | `lsblk -f` |
 
 #### The partition table ####
