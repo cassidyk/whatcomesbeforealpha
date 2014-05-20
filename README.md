@@ -20,3 +20,4 @@ Exercises might be included at the bottom of an ICA. Solutions should be automat
 ### Exercises ###
 * Create a submission box for scripts
 * Create Live CD builder
+Test
