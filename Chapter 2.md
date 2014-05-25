@@ -5,7 +5,7 @@
 #### Prep ####
 | To Do | Configuration |
 | -- | -- |
-| Mount | `mount /dev/sd$X$Y /mnt` |
+| Mount | `mount /dev/sdb1 /mnt` # partition & mkfs.ext4 /dev/sdb1 if needed |
 | List filesystem | `lsblk -f` |
 
 #### The partition table ####
