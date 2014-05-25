@@ -25,6 +25,7 @@ The following shell script will format /dev/sda so it contains 8 partitions of s
 | max=$(($space / 16)) # HD Size / Partition Size |
 | mkfs="mkfs.$filesystem $device$partition" |
 | start="sgdisk $device --first-aligned-in-largest" |
+| boot="sgdisk $device --end-of-largest" |
 
 ```
 #!/bin/bash
@@ -36,6 +37,8 @@ do
 done
 sgdisk $device --largest-new=$partition
 eval $mkfs
+(( partition++ ))
+sgdisk $device --new=9:`eval $start`:`eval $boot` --typecode=partnum:EF02
 ```
 
 #### Note ####
