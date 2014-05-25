@@ -26,6 +26,7 @@ The following shell script will format /dev/sda so it contains 8 partitions of s
 | mkfs="mkfs.$filesystem $device$partition" |
 | start="sgdisk $device --first-aligned-in-largest" |
 | boot="sgdisk $device --end-of-largest" |
+| bios='EF02'
 
 ```
 #!/bin/bash
@@ -38,7 +39,7 @@ done
 sgdisk $device --largest-new=$partition
 eval $mkfs
 (( partition++ ))
-sgdisk $device --new=$partition:`eval $start`:`eval $boot` --typecode=partnum:EF02
+sgdisk $device --new=$partition:`eval $start`:`eval $boot` --typecode=partnum:$bios
 ```
 
 #### Note ####
