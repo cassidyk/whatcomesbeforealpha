@@ -53,7 +53,7 @@ dd if=$source bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 > $destination
 | X='a' |
 | source='/mnt/file.img.gz' |
 | destination="/dev/sd$X" |
-| count=$(parted -ms $source print &#124; tail -n+3 &#124; grep . -c) |
+| count=$(parted -ms $destination print &#124; tail -n+3 &#124; grep . -c) |
 
 ```
 #!/bin/bash
