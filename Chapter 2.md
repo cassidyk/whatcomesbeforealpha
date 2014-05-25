@@ -38,12 +38,12 @@ pv -tpreb $destination | dd of=$source bs=1 count=$formula
 | -- |
 | X='a' |
 | source="/dev/sd$X" |
-| destination='/mnt/file.img' |
+| destination='/mnt/file.img.gz' |
 
 ```
 #!/bin/bash
 
-pv -tpreb $source | dd of=$destination
+dd if=$source bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 > $destination
 ```
 
 #### Pushing an image ####
@@ -51,14 +51,14 @@ pv -tpreb $source | dd of=$destination
 | Shell Variables |
 | -- |
 | X='a' |
-| source='/mnt/file.img' |
+| source='/mnt/file.img.gz' |
 | destination="/dev/sd$X" |
-| count=\`parted -ms /dev/sda print &#124; tail -n 1 &#124; cut -d':' -f1\` |
+| count=`parted -ms $source print &#124; tail -n+3 &#124; grep . -c` |
 
 ```
 #!/bin/bash
 
-pv -tpreb $source | dd of=$destination bs=4096 conv=notrunc,noerror,sync
+gunzip -c $source | pv | dd of=$destination bs=1024 conv=noerror,sync
 
 # randomize guids for each partition
 sgdisk $destination --randomize-guids
