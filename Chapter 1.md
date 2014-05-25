@@ -20,13 +20,14 @@ The following shell script will format /dev/sda so it contains 8 partitions of s
 | end='+16G' |
 | typecode='8300' |
 | partition=1 |
+| boot_start="sgdisk $device --first-aligned-in-largest" |
+| boot_end="sgdisk $device --end-of-largest" |
+| bios_type='EF02' |
 | name=$(echo $device &#124; cut -c 6-9) |
 | space=$(lsblk &#124; grep "$name" &#124; head -n 1 &#124; tr -s ' ' &#124; cut -d ' ' -f4 &#124; head -c -2) |
 | max=$(($space / 16)) # HD Size / Partition Size |
 | mkfs="mkfs.$filesystem $device$partition" |
-| start="sgdisk $device --first-aligned-in-largest" |
-| boot="sgdisk $device --end-of-largest" |
-| bios='EF02'
+
 
 ```
 #!/bin/bash
@@ -42,7 +43,7 @@ done
 sgdisk $device --largest-new=$partition
 eval $mkfs
 (( partition++ ))
-sgdisk $device --new=$partition:`eval $start`:`eval $boot` --typecode=partnum:$bios
+sgdisk $device --new=$partition:`eval $boot_start`:`eval $boot_end` --typecode=partnum:$bios_type
 ```
 
 #### Note ####
