@@ -53,13 +53,14 @@ dd if=$source bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 > $destination
 | X='a' |
 | source='/mnt/file.img.gz' |
 | destination="/dev/sd$X" |
-| count=$(parted -ms $destination print &#124; tail -n+3 &#124; grep . -c) |
+| count="parted -ms $destination print &#124; tail -n+3 &#124; grep . -c" |
 
 ```
 #!/bin/bash
 
 gunzip -c $source | pv | dd of=$destination bs=1024 conv=noerror,sync
 
+count=`eval $count`
 # randomize guids for each partition
 sgdisk $destination --randomize-guids
 for (( partition=1; partition<=$count; partition++ ))
