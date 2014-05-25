@@ -38,7 +38,7 @@ done
 sgdisk $device --largest-new=$partition
 eval $mkfs
 (( partition++ ))
-sgdisk $device --new=9:`eval $start`:`eval $boot` --typecode=partnum:EF02
+sgdisk $device --new=$partition:`eval $start`:`eval $boot` --typecode=partnum:EF02
 ```
 
 #### Note ####
