@@ -13,6 +13,7 @@
 | -- |
 | X='a' |
 | source="/dev/sd$X" |
+| layout='/mnt/partition_layout.bak' |
 | destination='/mnt/partition_table.img' |
 | count=`parted -ms $source print &#124; tail -n+3 &#124; grep . -c` |
 | name=$(echo $source &#124; cut -c 6-9) |
@@ -21,6 +22,9 @@
 
 ```
 #!/bin/bash
+
+# copy the partition layout
+parted -ms /dev/sda print > $layout
 
 # pulling the partition table
 pv -tpreb $source | dd of=$destination bs=1 count=$formula
