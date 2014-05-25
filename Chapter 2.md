@@ -14,7 +14,7 @@
 | X='a' |
 | source="/dev/sd$X" |
 | destination='/mnt/partition_table.img' |
-| count=\`parted -ms $source print &#124; tail -n 1 &#124; cut -d':' -f1\` |
+| count=`parted -ms /dev/sda print | tail -n+3 | grep . -c` |
 | name=$(echo $source &#124; cut -c 6-9) |
 | space=$(lsblk &#124; grep "$name" &#124; head -n 1 &#124; tr -s ' ' &#124; cut -d ' ' -f4 &#124; head -c -2) |
 | formula=$((1024 + ($space * $count))) |
