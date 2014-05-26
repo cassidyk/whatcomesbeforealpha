@@ -51,4 +51,5 @@ sgdisk $device --new=$partition:`eval $boot_start`:`eval $boot_end` --typecode=p
 To clear the partition table
 ```
 sgdisk $device --clear
+# pv defualts to using flags '-tpreb'
 ```
