@@ -33,40 +33,35 @@ pv -tpreb $source | dd of=$destination bs=1 count=$formula
 pv -tpreb $destination | dd of=$source bs=1 count=$formula
 ```
 
-#### Pulling an image ####
+#### The image file####
 | Shell Variables |
 | -- |
 | X='a' |
-| source="/dev/sd$X" |
-| destination='/mnt/file.img.gz' |
+| device="/dev/sd$X" |
+| file='/mnt/file.img.gz' |
+| count="parted -ms $device print &#124; tail -n+3 &#124; grep . -c" |
 
 ```
 #!/bin/bash
 
-dd if=$source bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 > $destination
-```
+# pulling the image
+dd if=$device bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 > $file
 
-#### Pushing an image ####
+# pushing the image
+gunzip -c $file | pv | dd of=$device bs=1024 conv=noerror,sync
 
-| Shell Variables |
-| -- |
-| X='a' |
-| source='/mnt/file.img.gz' |
-| destination="/dev/sd$X" |
-| count="parted -ms $destination print &#124; tail -n+3 &#124; grep . -c" |
 
-```
-#!/bin/bash
-
-gunzip -c $source | pv | dd of=$destination bs=1024 conv=noerror,sync
-
+# correct duplicate GUIDs
 count=`eval $count`
-# randomize guids for each partition
 sgdisk $destination --randomize-guids
 for (( partition=1; partition<=$count; partition++ ))
 do
     tune2fs $destination$partition -U random
 done
+
+# mount boot partition
+    # overwrite fstab
+    genfstab -U -p /mnt > /mnt/etc/fstab
 ```
 
 ### Challanges ###
