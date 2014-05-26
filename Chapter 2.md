@@ -27,10 +27,10 @@
 parted -ms /dev/sda print > $layout
 
 # pulling the partition table
-pv -tpreb $source | dd of=$destination bs=1 count=$formula
+pv $source | dd of=$destination bs=1 count=$formula
 
 # a push would therefore be
-pv -tpreb $destination | dd of=$source bs=1 count=$formula
+pv $destination | dd of=$source bs=1 count=$formula
 ```
 
 #### The image file####
