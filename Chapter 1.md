@@ -32,9 +32,10 @@ The following shell script will format /dev/sda so it contains 8 partitions of s
 ```
 #!/bin/bash
 
-# zero out the drive for better compression of images
+# zero out the device for better compression of images
 pv /dev/zero | of=$device bs=1024 conv=noerror,sync
 
+# section the device into parititons
 for (( ; partition<$max; partition++ ))
 do
     sgdisk $device --new=$partition:`eval $start`:$end --typecode=partnum:$typecode
