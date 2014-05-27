@@ -1,22 +1,29 @@
 Version 0.1
 ===========
-This book will be structured as a series of ICA's which will help you create a sandbox to play in. It is written with the assumption you will be running as root from an Archlinux Live CD.
+This book is structured as a series of assignments which will guide exploritory system building. This will be accomplished by first creating an enviroment in which to build and then outling the use of a few building blocks.
 
-ICA's will be cumulative in the sense that previous ICA configurations may need to be completed first.
+An assignment may end with some exercises to complete which will extend your toolkit for building new systems. Exercises should be completed in similar form as assignments for easy import into scripts. Any manual tasks should be clearly marked for future iterations.
 
-Layout of the assignments is still in Beta so feedback is appreciated.
+Assignments are written for BASH running within an Archlinux LiveCD.
 
-| Shell Variables |
+#### Assignment Format ####
+
+| BASH Code |
 | -- |
-| Variables are assigned here. Copy and paste into your script |
+| This table includes variable code. It is to be copied into your script and modified as needed |
+```
+This block represents a series of BASH commands.
 
+All code can be run using the variable table located above it. Should any manual steps be required
+    They will be spelt out in an indented subsection
 ```
-This is a script that will run with the values set above
-```
-Values have been tested to work at the command line, but there may be some issues if they are copied into a script and then the script is run. Please report any issues you encounter as eventually everything will need to run from a script.
+
+`This block represents a single BASH command` # Variables may need to be specified
+
+All blocks have been tested at a command line, but some issues may arise if they are run in a script and then the script is run. Please report any issues and fixes so that all code will run in a script.
 
 Exercises might be included at the bottom of an ICA. Solutions should be automated where possible, and clearly marked what needs to be done manually so they can be improved.
 
-### Exercises ###
-* Create a submission box for scripts
+#### Exercises ####
+* Create a submission box for exercises
 * Create Live CD builder

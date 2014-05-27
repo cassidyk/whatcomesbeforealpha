@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
         
         <meta charset="UTF-8">
-        <title>Introduction | Version 0.1</title>
+        <title>Script: Arch Install | Version 0.1</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
@@ -13,11 +13,11 @@
         <meta name="generator" content="www.gitbook.io">
 
         
-        <link rel="next" href="./Chapter 1.html" />
         
+        <link rel="prev" href="./Chapter 3.html" />
         
 
-        <meta property="og:title" content="Introduction | Version 0.1">
+        <meta property="og:title" content="Script: Arch Install | Version 0.1">
         <meta property="og:site_name" content="Version 0.1">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
@@ -40,7 +40,7 @@
 
 
         
-    <div class="book"  data-level="0" data-basepath="." data-revision="1401084237902">
+    <div class="book"  data-level="4" data-basepath="." data-revision="1401084237902">
     <div class="book-header">
     <!-- Actions Left -->
     
@@ -111,7 +111,7 @@
 
         
         <li>
-            <a href="https://github.com/null/edit/master/README.md" target="blank">Edit and Contribute</a>
+            <a href="https://github.com/null/edit/master/Arch Install Script.md" target="blank">Edit and Contribute</a>
         </li>
         
 
@@ -172,57 +172,96 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 0%;min-width: 0%;"></div>
+        <div class="inner" style="width: 100%;min-width: 75%;"></div>
     </div>
     <div class="chapters">
     
         <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="./Chapter 1.html" title="Chapter 1" class="chapter  new-chapter" data-progress="1" style="left: 25%;"></a>
+        <a href="./Chapter 1.html" title="Chapter 1" class="chapter done new-chapter" data-progress="1" style="left: 25%;"></a>
     
-        <a href="./Chapter 2.html" title="Chapter 2" class="chapter  new-chapter" data-progress="2" style="left: 50%;"></a>
+        <a href="./Chapter 2.html" title="Chapter 2" class="chapter done new-chapter" data-progress="2" style="left: 50%;"></a>
     
-        <a href="./Chapter 3.html" title="Chapter 3" class="chapter  new-chapter" data-progress="3" style="left: 75%;"></a>
+        <a href="./Chapter 3.html" title="Chapter 3" class="chapter done new-chapter" data-progress="3" style="left: 75%;"></a>
     
-        <a href="./Arch Install Script.html" title="Script: Arch Install" class="chapter  new-chapter" data-progress="4" style="left: 100%;"></a>
+        <a href="./Arch Install Script.html" title="Script: Arch Install" class="chapter done new-chapter" data-progress="4" style="left: 100%;"></a>
     
     </div>
 </div>
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_2427">
+                    <section class="normal" id="section-gitbook_2423">
                     
-                        <h1 id="version-0-1">Version 0.1</h1>
-<p>This book is structured as a series of assignments which will guide exploritory system building. This will be accomplished by first creating an enviroment in which to build and then outling the use of a few building blocks.</p>
-<p>An assignment may end with some exercises to complete which will extend your toolkit for building new systems. Exercises should be completed in similar form as assignments for easy import into scripts. Any manual tasks should be clearly marked for future iterations.</p>
-<p>Assignments are written for BASH running within an Archlinux LiveCD.</p>
-<h4 id="assignment-format">Assignment Format</h4>
-<table>
-<thead>
-<tr>
-<th>BASH Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>This table includes variable code. It is to be copied into your script and modified as needed</td>
-</tr>
-</tbody>
-</table>
-<pre><code>This block represents a series of BASH commands.
-
-All code can be run using the variable table located above it. Should any manual steps be required
-    They will be spelt out in an indented subsection
-</code></pre><p><code>This block represents a single BASH command</code> # Variables may need to be specified</p>
-<p>All blocks have been tested at a command line, but some issues may arise if they are run in a script and then the script is run. Please report any issues and fixes so that all code will run in a script.</p>
-<p>Exercises might be included at the bottom of an ICA. Solutions should be automated where possible, and clearly marked what needs to be done manually so they can be improved.</p>
-<h4 id="exercises">Exercises</h4>
+                        <h1 id="script-install-arch">Script: Install Arch</h1>
+<h2 id="success-not-guaranteed">Success Not Guaranteed</h2>
+<p>Before completing please read up on some trouble areas</p>
 <ul>
-<li>Create a submission box for exercises</li>
-<li>Create Live CD builder</li>
+<li><a href="https://wiki.archlinux.org/index.php/Beginners%27_guide#Choose_a_partition_table_type" target="_blank"> Choosing a partition type </a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Partitioning#Choosing_between_GPT_and_MBR" target="_blank"> GPT versus MBR </a></li>
+<li><a href="https://wiki.archlinux.org/index.php/GUID_Partition_Table#BIOS_systems" target="_blank"> BIOS with GPT </a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#EFI_System_Partition" target="_blank"> EFI with GPT </a></li>
 </ul>
+<h2 id="single-partition-setup">Single partition setup</h2>
+<pre><code>setfont Lat2-Terminus16
+sed -i &#39;s/#en_CA.UTF-8 UTF-8/en_CA.UTF-8 UTF-8/&#39; /etc/locale.gen
+sed -i &#39;s/en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/&#39; /etc/locale.gen
+locale-gen
+export LANG=en_CA.UTF-8
 
+mount /dev/sda1 /mnt
+
+pacstrap -i /mnt base
+
+genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+nano /mnt/etc/fstab # confirm it is correct
+
+arch-chroot /mnt /bin/bash
+</code></pre><h2 id="multi-partition-setup">Multi partition setup</h2>
+<pre><code>setfont Lat2-Terminus16
+sed -i &#39;s/#en_CA.UTF-8 UTF-8/en_CA.UTF-8 UTF-8/&#39; /etc/locale.gen
+sed -i &#39;s/en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/&#39; /etc/locale.gen
+locale-gen
+export LANG=en_CA.UTF-8
+
+cgdisk /dev/sda # if partitions not created
+
+mkswap /dev/sda1
+swapon /dev/sda1
+mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/sda3
+mount /dev/sda2 /mnt
+mkdir /mnt/home
+mount /dev/sda3 /mnt/home
+
+pacstrap -i /mnt base
+
+genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+nano /mnt/etc/fstab # confirm it is correct
+
+arch-chroot /mnt /bin/bash
+</code></pre><h2 id="continue-from-arch-chroot">Continue from arch-chroot</h2>
+<pre><code>sed -i &#39;s/#en_CA.UTF-8 UTF-8/en_CA.UTF-8 UTF-8/&#39; /etc/locale.gen
+locale-gen
+echo LANG=en_CA.UTF-8 &gt; /etc/locale.conf
+export LANG=en_CA.UTF-8
+
+setfont Lat2-Terminus16
+echo FONT=Lat2-Terminus16 &gt; /etc/vconsole.conf
+
+ln -s /usr/share/zoneinfo/Canada/Mountain /etc/localtime
+hwclock --systohc --utc
+
+echo Arch &gt; /etc/hostname   # set hostname
+systemctl enable dhcpcd.service
+passwd root # set root login
+
+pacman -S grub
+
+grub-install --target=i386-pc --recheck --force /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+exit
+</code></pre>
                     
                     </section>
                 
@@ -231,8 +270,8 @@ All code can be run using the variable table located above it. Should any manual
         </div>
 
         
+        <a href="./Chapter 3.html" class="navigation navigation-prev navigation-unique"><i class="fa fa-angle-left"></i></a>
         
-        <a href="./Chapter 1.html" class="navigation navigation-next navigation-unique"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

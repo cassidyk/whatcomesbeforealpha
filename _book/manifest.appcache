@@ -1,8 +1,11 @@
 CACHE MANIFEST
-# Revision 1400041836661
+# Revision 1401084237903
 
 CACHE:
+Arch Install Script.html
 Chapter 1.html
+Chapter 2.html
+Chapter 3.html
 index.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff

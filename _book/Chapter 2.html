@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
         
         <meta charset="UTF-8">
-        <title>Introduction | Version 0.1</title>
+        <title>Chapter 2 | Version 0.1</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
@@ -13,11 +13,13 @@
         <meta name="generator" content="www.gitbook.io">
 
         
-        <link rel="next" href="./Chapter 1.html" />
+        <link rel="next" href="./Chapter 3.html" />
         
+        
+        <link rel="prev" href="./Chapter 1.html" />
         
 
-        <meta property="og:title" content="Introduction | Version 0.1">
+        <meta property="og:title" content="Chapter 2 | Version 0.1">
         <meta property="og:site_name" content="Version 0.1">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
@@ -40,7 +42,7 @@
 
 
         
-    <div class="book"  data-level="0" data-basepath="." data-revision="1401084237902">
+    <div class="book"  data-level="2" data-basepath="." data-revision="1401084237902">
     <div class="book-header">
     <!-- Actions Left -->
     
@@ -111,7 +113,7 @@
 
         
         <li>
-            <a href="https://github.com/null/edit/master/README.md" target="blank">Edit and Contribute</a>
+            <a href="https://github.com/null/edit/master/Chapter 2.md" target="blank">Edit and Contribute</a>
         </li>
         
 
@@ -172,15 +174,15 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 0%;min-width: 0%;"></div>
+        <div class="inner" style="width: 50%;min-width: 25%;"></div>
     </div>
     <div class="chapters">
     
         <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="./Chapter 1.html" title="Chapter 1" class="chapter  new-chapter" data-progress="1" style="left: 25%;"></a>
+        <a href="./Chapter 1.html" title="Chapter 1" class="chapter done new-chapter" data-progress="1" style="left: 25%;"></a>
     
-        <a href="./Chapter 2.html" title="Chapter 2" class="chapter  new-chapter" data-progress="2" style="left: 50%;"></a>
+        <a href="./Chapter 2.html" title="Chapter 2" class="chapter done new-chapter" data-progress="2" style="left: 50%;"></a>
     
         <a href="./Chapter 3.html" title="Chapter 3" class="chapter  new-chapter" data-progress="3" style="left: 75%;"></a>
     
@@ -191,13 +193,31 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_2427">
+                    <section class="normal" id="section-gitbook_2425">
                     
-                        <h1 id="version-0-1">Version 0.1</h1>
-<p>This book is structured as a series of assignments which will guide exploritory system building. This will be accomplished by first creating an enviroment in which to build and then outling the use of a few building blocks.</p>
-<p>An assignment may end with some exercises to complete which will extend your toolkit for building new systems. Exercises should be completed in similar form as assignments for easy import into scripts. Any manual tasks should be clearly marked for future iterations.</p>
-<p>Assignments are written for BASH running within an Archlinux LiveCD.</p>
-<h4 id="assignment-format">Assignment Format</h4>
+                        <h1 id="images">Images</h1>
+<h2 id="assignment-2">Assignment 2</h2>
+<h3 id="using-dd-with-partitions">Using DD with partitions</h3>
+<h4 id="prep">Prep</h4>
+<table>
+<thead>
+<tr>
+<th>To Do</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mount</td>
+<td><code>mount /dev/sdb1 /mnt</code> # partition &amp; mkfs.ext4 /dev/sdb1 if needed</td>
+</tr>
+<tr>
+<td>List filesystem</td>
+<td><code>lsblk -f</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="the-partition-table">The partition table</h4>
 <table>
 <thead>
 <tr>
@@ -206,21 +226,91 @@
 </thead>
 <tbody>
 <tr>
-<td>This table includes variable code. It is to be copied into your script and modified as needed</td>
+<td>X=&#39;a&#39;</td>
+</tr>
+<tr>
+<td>source=&quot;/dev/sd$X&quot;</td>
+</tr>
+<tr>
+<td>layout=&#39;/mnt/partition_layout.bak&#39;</td>
+</tr>
+<tr>
+<td>destination=&#39;/mnt/partition_table.img&#39;</td>
+</tr>
+<tr>
+<td>count=$(parted -ms $source print &#124; tail -n+3 &#124; grep . -c)</td>
+</tr>
+<tr>
+<td>name=$(echo $source &#124; cut -c 6-9)</td>
+</tr>
+<tr>
+<td>space=$(lsblk &#124; grep &quot;$name&quot; &#124; head -n 1 &#124; tr -s &#39; &#39; &#124; cut -d &#39; &#39; -f4 &#124; head -c -2)</td>
+</tr>
+<tr>
+<td>formula=$((1024 + ($space * $count)))</td>
 </tr>
 </tbody>
 </table>
-<pre><code>This block represents a series of BASH commands.
+<pre><code>#!/bin/bash
 
-All code can be run using the variable table located above it. Should any manual steps be required
-    They will be spelt out in an indented subsection
-</code></pre><p><code>This block represents a single BASH command</code> # Variables may need to be specified</p>
-<p>All blocks have been tested at a command line, but some issues may arise if they are run in a script and then the script is run. Please report any issues and fixes so that all code will run in a script.</p>
-<p>Exercises might be included at the bottom of an ICA. Solutions should be automated where possible, and clearly marked what needs to be done manually so they can be improved.</p>
-<h4 id="exercises">Exercises</h4>
+# copy the partition layout
+parted -ms /dev/sda print &gt; $layout
+
+# pulling the partition table
+pv $source | dd of=$destination bs=1 count=$formula
+
+# a push would therefore be
+pv $destination | dd of=$source bs=1 count=$formula
+</code></pre><h4 id="the-image-file">The image file</h4>
+<table>
+<thead>
+<tr>
+<th>BASH Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X=&#39;a&#39;</td>
+</tr>
+<tr>
+<td>device=&quot;/dev/sd$X&quot;</td>
+</tr>
+<tr>
+<td>file=&#39;/mnt/file.img.gz&#39;</td>
+</tr>
+<tr>
+<td>count=&quot;parted -ms $device print &#124; tail -n+3 &#124; grep . -c&quot;</td>
+</tr>
+</tbody>
+</table>
+<pre><code>#!/bin/bash
+
+# pulling the image
+dd if=$device bs=1024 conv=notrunc,noerror,sync | pv | gzip -c -9 &gt; $file
+
+# pushing the image
+gunzip -c $file | pv | dd of=$device bs=1024 conv=noerror,sync
+
+
+# correct duplicate GUIDs
+count=`eval $count`
+sgdisk $destination --randomize-guids
+for (( partition=1; partition&lt;=$count; partition++ ))
+do
+    tune2fs $destination$partition -U random
+done
+
+# mount boot partition
+    # overwrite fstab
+    genfstab -U -p /mnt &gt; /mnt/etc/fstab
+</code></pre><h3 id="challanges">Challanges</h3>
 <ul>
-<li>Create a submission box for exercises</li>
-<li>Create Live CD builder</li>
+<li><a href="https://wiki.archlinux.org/index.php/Beginners%27_guide" target="_blank"> Install Arch to /dev/sda1 </a></li>
+<li>Create an image file of /dev/sda1</li>
+<li>Restore the image file to another partition.</li>
+<li>Write a script to update your bootloader to the new partition. What did you need to do to confirm the correct partition was booted?</li>
+<li>Complete the above for Windows 7</li>
+<li>Create a script that splits/joins adjacent partitions</li>
 </ul>
 
                     
@@ -231,8 +321,10 @@ All code can be run using the variable table located above it. Should any manual
         </div>
 
         
+        <a href="./Chapter 1.html" class="navigation navigation-prev "><i class="fa fa-angle-left"></i></a>
         
-        <a href="./Chapter 1.html" class="navigation navigation-next navigation-unique"><i class="fa fa-angle-right"></i></a>
+        
+        <a href="./Chapter 3.html" class="navigation navigation-next "><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

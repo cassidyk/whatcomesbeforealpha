@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
         
         <meta charset="UTF-8">
-        <title>Introduction | Version 0.1</title>
+        <title>Chapter 3 | Version 0.1</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
@@ -13,11 +13,13 @@
         <meta name="generator" content="www.gitbook.io">
 
         
-        <link rel="next" href="./Chapter 1.html" />
+        <link rel="next" href="./Arch Install Script.html" />
         
+        
+        <link rel="prev" href="./Chapter 2.html" />
         
 
-        <meta property="og:title" content="Introduction | Version 0.1">
+        <meta property="og:title" content="Chapter 3 | Version 0.1">
         <meta property="og:site_name" content="Version 0.1">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
@@ -40,7 +42,7 @@
 
 
         
-    <div class="book"  data-level="0" data-basepath="." data-revision="1401084237902">
+    <div class="book"  data-level="3" data-basepath="." data-revision="1401084237902">
     <div class="book-header">
     <!-- Actions Left -->
     
@@ -111,7 +113,7 @@
 
         
         <li>
-            <a href="https://github.com/null/edit/master/README.md" target="blank">Edit and Contribute</a>
+            <a href="https://github.com/null/edit/master/Chapter 3.md" target="blank">Edit and Contribute</a>
         </li>
         
 
@@ -172,17 +174,17 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 0%;min-width: 0%;"></div>
+        <div class="inner" style="width: 75%;min-width: 50%;"></div>
     </div>
     <div class="chapters">
     
         <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="./Chapter 1.html" title="Chapter 1" class="chapter  new-chapter" data-progress="1" style="left: 25%;"></a>
+        <a href="./Chapter 1.html" title="Chapter 1" class="chapter done new-chapter" data-progress="1" style="left: 25%;"></a>
     
-        <a href="./Chapter 2.html" title="Chapter 2" class="chapter  new-chapter" data-progress="2" style="left: 50%;"></a>
+        <a href="./Chapter 2.html" title="Chapter 2" class="chapter done new-chapter" data-progress="2" style="left: 50%;"></a>
     
-        <a href="./Chapter 3.html" title="Chapter 3" class="chapter  new-chapter" data-progress="3" style="left: 75%;"></a>
+        <a href="./Chapter 3.html" title="Chapter 3" class="chapter done new-chapter" data-progress="3" style="left: 75%;"></a>
     
         <a href="./Arch Install Script.html" title="Script: Arch Install" class="chapter  new-chapter" data-progress="4" style="left: 100%;"></a>
     
@@ -191,13 +193,34 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_2427">
+                    <section class="normal" id="section-gitbook_2426">
                     
-                        <h1 id="version-0-1">Version 0.1</h1>
-<p>This book is structured as a series of assignments which will guide exploritory system building. This will be accomplished by first creating an enviroment in which to build and then outling the use of a few building blocks.</p>
-<p>An assignment may end with some exercises to complete which will extend your toolkit for building new systems. Exercises should be completed in similar form as assignments for easy import into scripts. Any manual tasks should be clearly marked for future iterations.</p>
-<p>Assignments are written for BASH running within an Archlinux LiveCD.</p>
-<h4 id="assignment-format">Assignment Format</h4>
+                        <h1 id="images">Images</h1>
+<h2 id="assignment-3">Assignment 3</h2>
+<h3 id="file-syncing">File Syncing</h3>
+<h4 id="prep">Prep</h4>
+<table>
+<thead>
+<tr>
+<th>To Do</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a user</td>
+<td><code>useradd -m -g users -G wheel -s /bin/bash $user</code> # passwd $user</td>
+</tr>
+<tr>
+<td>Packages to install</td>
+<td><code>pacman -S base-devel</code></td>
+</tr>
+<tr>
+<td>BTSync</td>
+<td>Installed with yaourt in next section</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -206,21 +229,34 @@
 </thead>
 <tbody>
 <tr>
-<td>This table includes variable code. It is to be copied into your script and modified as needed</td>
+<td>name=&#39;arch&#39;</td>
+</tr>
+<tr>
+<td>storage=&#39;\/root\/.sync&#39;</td>
 </tr>
 </tbody>
 </table>
-<pre><code>This block represents a series of BASH commands.
+<pre><code>echo SUDONOVERIF=1 &gt;&gt; /etc/yaourtrc
+su user -c &#39;yaourt -Sy btsync --noconfirm&#39;
 
-All code can be run using the variable table located above it. Should any manual steps be required
-    They will be spelt out in an indented subsection
-</code></pre><p><code>This block represents a single BASH command</code> # Variables may need to be specified</p>
-<p>All blocks have been tested at a command line, but some issues may arise if they are run in a script and then the script is run. Please report any issues and fixes so that all code will run in a script.</p>
-<p>Exercises might be included at the bottom of an ICA. Solutions should be automated where possible, and clearly marked what needs to be done manually so they can be improved.</p>
-<h4 id="exercises">Exercises</h4>
+mkdir ~/.config
+mkdir ~/.config/btsync
+mkdir ~/.sync
+btsync --dump-sample-config &gt;&gt; ~/.config/btsync/btsync.conf
+
+# modify btsync.conf
+sed -i &quot;2s/.*/  \&quot;device_name\&quot; : \&quot;$name\&quot;,/&quot; ~/.config/btsync/btsync.conf
+sed -i &quot;10s/.*/  \&quot;storage_path\&quot; : \&quot;$storage\&quot;,/&quot; ~/.config/btsync/btsync.conf
+sed -i &#39;16s/.*/  &quot;check_for_updates&quot; : false,/&#39; ~/.config/btsync/btsync.conf
+
+# remove credentials
+sed -i &#39;31s/.*/  &quot;listen&quot; : &quot;0.0.0.0:8888&quot;/&#39; ~/.config/btsync/btsync.conf
+sed -i &#39;32s/.*//&#39; ~/.config/btsync/btsync.conf
+sed -i &#39;33s/.*//&#39; ~/.config/btsync/btsync.conf
+</code></pre><h3 id="exercises">Exercises</h3>
 <ul>
-<li>Create a submission box for exercises</li>
-<li>Create Live CD builder</li>
+<li>use BTSync to transfer an image between computers</li>
+<li>use rsync to transfer an image between computers</li>
 </ul>
 
                     
@@ -231,8 +267,10 @@ All code can be run using the variable table located above it. Should any manual
         </div>
 
         
+        <a href="./Chapter 2.html" class="navigation navigation-prev "><i class="fa fa-angle-left"></i></a>
         
-        <a href="./Chapter 1.html" class="navigation navigation-next navigation-unique"><i class="fa fa-angle-right"></i></a>
+        
+        <a href="./Arch Install Script.html" class="navigation navigation-next "><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

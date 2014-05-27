@@ -1,5 +1,5 @@
 # Images #
-## ICA 3 ##
+## Assignment 3 ##
 ### File Syncing ###
 
 #### Prep ####
@@ -9,7 +9,7 @@
 | Packages to install | `pacman -S base-devel` |
 | BTSync | Installed with yaourt in next section |
 
-| Shell Variables |
+| BASH Code |
 | -- |
 | name='arch' |
 | storage='\/root\/.sync' |
